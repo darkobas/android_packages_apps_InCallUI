@@ -198,6 +198,7 @@ public final class Call {
     private DisconnectCause mDisconnectCause;
     private int mSessionModificationState;
     private final List<String> mChildCallIds = new ArrayList<>();
+    private boolean mIsOutgoing = false;
 
     private InCallVideoCallListener mVideoCallListener;
 
@@ -293,6 +294,13 @@ public final class Call {
 
     public void setState(int state) {
         mState = state;
+        if (state == State.DIALING || state == State.CONNECTING) {
+            mIsOutgoing = true;
+        }
+    }
+
+    public boolean isOutgoing() {
+        return mIsOutgoing;
     }
 
     public int getNumberPresentation() {
@@ -353,6 +361,30 @@ public final class Call {
 
     public boolean isConferenceCall() {
         return hasProperty(CallProperties.CONFERENCE);
+    }
+
+    public boolean isForwarded() {
+        return hasProperty(CallProperties.WAS_FORWARDED);
+    }
+
+    public boolean isWaitingForRemoteSide() {
+        if (mState == State.ACTIVE && hasProperty(CallProperties.HELD_REMOTELY)) {
+            return true;
+        }
+        if (mState == State.DIALING && hasProperty(CallProperties.DIALING_IS_WAITING)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean wasUnansweredForwarded() {
+        return getDisconnectCause().getCode() == DisconnectCause.MISSED
+                && hasProperty(CallProperties.ADDITIONAL_CALL_FORWARDED);
+    }
+
+    public boolean missedBecauseIncomingCallsBarredRemotely() {
+        return getDisconnectCause().getCode() == DisconnectCause.RESTRICTED
+                && hasProperty(CallProperties.REMOTE_INCOMING_CALLS_BARRED);
     }
 
     public GatewayInfo getGatewayInfo() {

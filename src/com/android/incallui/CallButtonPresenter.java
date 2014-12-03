@@ -29,10 +29,8 @@ import com.android.incallui.InCallPresenter.InCallStateListener;
 import com.android.incallui.InCallPresenter.IncomingCallListener;
 import com.android.incallui.InCallPresenter.InCallDetailsListener;
 
-import java.util.ArrayList;
-
+import android.content.DialogInterface;
 import android.telephony.PhoneNumberUtils;
-import android.widget.Toast;
 
 import java.util.Objects;
 
