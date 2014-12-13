@@ -51,7 +51,6 @@ import com.android.incalluibind.ObjectFactory;
 
 import java.lang.ref.WeakReference;
 
-import com.android.internal.telephony.util.BlacklistUtils;
 import com.google.common.base.Preconditions;
 
 /**
@@ -503,37 +502,6 @@ public class CallCardPresenter extends Presenter<CallCardPresenter.CallCardUi>
         } else {
             ui.setPrimary(null, null, false, null, null, isConference,
                     canManageConference, false, isForwarded);
-        }
-    }
-
-    private final String checkIdp(String number, boolean nameIsNumber, boolean isIncoming) {
-        if (mContext.getResources().getBoolean(R.bool.def_incallui_checkidp_enabled)
-                && isCDMAPhone(getActiveSubscription()) && isIncoming && nameIsNumber) {
-            if (number.indexOf(IDP_PREFIX) == 0) {
-                return IDP_PLUS + number.substring(IDP_PREFIX.length());
-            } else if ((number.indexOf(IDP_IDN) == 0) && (!isRoaming(getActiveSubscription()))) {
-                return IDP_ZERO + number.substring(IDP_IDN.length());
-            }
-        }
-        return number;
-    }
-
-    private boolean isCDMAPhone(long subscription) {
-        boolean isCDMA = false;
-        int phoneType = TelephonyManager.getDefault().isMultiSimEnabled()
-                ? TelephonyManager.getDefault().getCurrentPhoneType(subscription)
-                        : TelephonyManager.getDefault().getPhoneType();
-        if (TelephonyManager.PHONE_TYPE_CDMA == phoneType) {
-            isCDMA = true;
-        }
-        return isCDMA;
-    }
-
-    private boolean isRoaming(long subscription) {
-        if (TelephonyManager.getDefault().isMultiSimEnabled()) {
-            return TelephonyManager.getDefault().isNetworkRoaming(subscription);
-        } else {
-            return TelephonyManager.getDefault().isNetworkRoaming();
         }
     }
 
