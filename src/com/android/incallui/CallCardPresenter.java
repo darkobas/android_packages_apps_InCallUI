@@ -720,30 +720,6 @@ public class CallCardPresenter extends Presenter<CallCardPresenter.CallCardUi>
         ui.setCallCardVisible(!isFullScreenVideo);
     }
 
-    public void blacklistClicked(final Context context) {
-        if (mPrimary == null) {
-            return;
-        }
-
-        final String number = mPrimary.getNumber();
-        final String message = context.getString(R.string.blacklist_dialog_message, number);
-
-        new AlertDialog.Builder(context)
-                .setTitle(R.string.blacklist_dialog_title)
-                .setMessage(message)
-                .setPositiveButton(R.string.pause_prompt_yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.d(this, "hanging up due to blacklist: " + mPrimary.getId());
-                        TelecomAdapter.getInstance().disconnectCall(mPrimary.getId());
-                        BlacklistUtils.addOrUpdate(context, mPrimary.getNumber(),
-                                BlacklistUtils.BLOCK_CALLS, BlacklistUtils.BLOCK_CALLS);
-                    }
-                })
-                .setNegativeButton(R.string.pause_prompt_no, null)
-                .show();
-    }
-
     public interface CallCardUi extends Ui {
         void setVisible(boolean on);
         void setCallCardVisible(boolean visible);

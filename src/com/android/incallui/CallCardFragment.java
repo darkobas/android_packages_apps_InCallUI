@@ -577,9 +577,6 @@ public class CallCardFragment extends BaseFragment<CallCardPresenter, CallCardPr
         updateVBbyCall(state);
         updateMoreMenuByCall(state);
 
-        updateVBbyCall(state);
-        updateMoreMenuByCall(state);
-
         Log.v(this, "setCallState " + callStateLabel);
         Log.v(this, "DisconnectCause " + disconnectCause.toString());
         Log.v(this, "gateway " + connectionLabel + gatewayNumber);
@@ -1325,9 +1322,6 @@ public class CallCardFragment extends BaseFragment<CallCardPresenter, CallCardPr
 
                     return true;
 
-                case R.id.menu_add_to_blacklist:
-                    getPresenter().blacklistClicked(getActivity());
-                    return true;
             }
             return true;
         }
