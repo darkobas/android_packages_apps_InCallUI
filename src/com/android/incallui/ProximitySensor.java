@@ -22,6 +22,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.telecom.AudioState;
@@ -294,8 +295,14 @@ public class ProximitySensor implements AccelerometerListener.OrientationListene
                         || (Settings.System.getInt(mContext.getContentResolver(),
                         Settings.System.PROXIMITY_AUTO_SPEAKER_INCALL_ONLY, 0) == 1
                         && !mIsPhoneOutgoing)) {
-                    TelecomAdapter.getInstance().setAudioRoute(AudioMode.SPEAKER);
-                }
+			    final Handler handler = new Handler();
+			    handler.postDelayed(new Runnable() {
+		            @Override
+		    	    public void run() {
+                            TelecomAdapter.getInstance().setAudioRoute(AudioMode.SPEAKER);
+			    }
+                        }, 2000);
+		}
             } else if (!speaker) {
                 TelecomAdapter.getInstance().setAudioRoute(AudioMode.EARPIECE);
                 updateProximitySensorMode();
