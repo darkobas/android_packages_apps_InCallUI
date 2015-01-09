@@ -276,7 +276,7 @@ public class ProximitySensor implements AccelerometerListener.OrientationListene
         if (mSensor != null && mProxSensor != null) {
             if (mIsPhoneOffhook) {
                 mSensor.registerListener(this, mProxSensor,
-                        SensorManager.SENSOR_DELAY_NORMAL);
+                        SensorManager.SENSOR_DELAY_GAME);
             } else {
                 mSensor.unregisterListener(this);
             }
@@ -301,7 +301,7 @@ public class ProximitySensor implements AccelerometerListener.OrientationListene
 		    	    public void run() {
                             TelecomAdapter.getInstance().setAudioRoute(AudioMode.SPEAKER);
 			    }
-                        }, 2000);
+                        }, 500);
 		}
             } else if (!speaker) {
                 TelecomAdapter.getInstance().setAudioRoute(AudioMode.EARPIECE);
