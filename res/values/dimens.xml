@@ -84,9 +84,9 @@
     <dimen name="incoming_call_widget_circle_size">56dp</dimen>
 
     <!-- Size of alarm alert outer ring. -->
-    <dimen name="glowpadview_outerring_diameter">250dp</dimen>
+    <dimen name="glowpadview_outerring_diameter">276dp</dimen>
     <!-- Default target placement radius for GlowPadView. Should be 1/2 of outerring diameter. -->
-    <dimen name="glowpadview_target_placement_radius">125dp</dimen>
+    <dimen name="glowpadview_target_placement_radius">138dp</dimen>
 
     <!-- Default glow radius for GlowPadView -->
     <dimen name="glowpadview_glow_radius">70dip</dimen>
