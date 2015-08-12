@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:focusable="true"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
+        android:gravity="bottom"
         android:background="@color/glowpad_background_color"
         android:visibility="gone"
 
