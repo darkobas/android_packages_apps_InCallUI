@@ -410,7 +410,7 @@ public class CallButtonPresenter extends Presenter<CallButtonPresenter.CallButto
         ui.showButton(BUTTON_PAUSE_VIDEO, isVideo && !useExt);
         ui.showButton(BUTTON_DIALPAD, !isVideo || useExt);
         ui.showButton(BUTTON_MERGE, showMerge);
-        ui.enableAddParticipant(showAddParticipant);
+        ui.showButton(BUTTON_ADD_PARTICIPANT, showAddParticipant);
 
         ui.updateButtonStates();
     }
@@ -451,7 +451,6 @@ public class CallButtonPresenter extends Presenter<CallButtonPresenter.CallButto
         void setHold(boolean on);
         void setCameraSwitched(boolean isBackFacingCamera);
         void setVideoPaused(boolean isPaused);
-        void enableAddParticipant(boolean show);
         void setAudio(int mode);
         void setSupportedAudio(int mask);
         void displayDialpad(boolean on, boolean animate);

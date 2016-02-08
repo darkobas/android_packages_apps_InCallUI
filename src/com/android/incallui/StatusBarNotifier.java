@@ -278,9 +278,6 @@ public class StatusBarNotifier implements InCallPresenter.InCallStateListener,
             builder.setUsesChronometer(false);
             addDismissUpgradeRequestAction(builder);
             addAcceptUpgradeRequestAction(builder);
-            if (isMoreOptionRequired(call)) {
-                addMoreAction(builder);
-            }
         } else {
             createIncomingCallNotification(call, state, builder);
         }
@@ -299,12 +296,6 @@ public class StatusBarNotifier implements InCallPresenter.InCallStateListener,
         Log.i(this, "Displaying notification for " + notificationType);
         mNotificationManager.notify(notificationType, notification);
         mCurrentNotification = notificationType;
-    }
-
-    private boolean isMoreOptionRequired(Call call) {
-        return VideoProfile.isAudioOnly(call.getVideoState()) &&
-                VideoProfile.isBidirectional(call.getModifyToVideoState()) &&
-                QtiCallUtils.useExt(mContext);
     }
 
     private void createIncomingCallNotification(

@@ -72,7 +72,8 @@ public class CallButtonFragment
         public static final int BUTTON_MERGE = 8;
         public static final int BUTTON_PAUSE_VIDEO = 9;
         public static final int BUTTON_MANAGE_VIDEO_CONFERENCE = 10;
-        public static final int BUTTON_COUNT = 11;
+        public static final int BUTTON_ADD_PARTICIPANT = 11;
+        public static final int BUTTON_COUNT = 12;
     }
 
     private SparseIntArray mButtonVisibilityMap = new SparseIntArray(BUTTON_COUNT);
@@ -401,6 +402,8 @@ public class CallButtonFragment
                 return mPauseVideoButton;
             case BUTTON_MANAGE_VIDEO_CONFERENCE:
                 return mManageVideoCallConferenceButton;
+            case BUTTON_ADD_PARTICIPANT:
+                return mAddParticipantButton;
             default:
                 Log.w(this, "Invalid button id");
                 return null;
@@ -425,10 +428,6 @@ public class CallButtonFragment
     @Override
     public void setVideoPaused(boolean isPaused) {
         mPauseVideoButton.setSelected(isPaused);
-    }
-
-    public void enableAddParticipant(boolean show) {
-        mAddParticipantButton.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     @Override
