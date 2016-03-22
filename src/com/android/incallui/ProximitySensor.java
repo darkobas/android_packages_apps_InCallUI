@@ -60,7 +60,6 @@ public class ProximitySensor implements AccelerometerListener.OrientationListene
     private final ProximityDisplayListener mDisplayListener;
     private int mOrientation = AccelerometerListener.ORIENTATION_UNKNOWN;
     private boolean mUiShowing = false;
-    private boolean mHasIncomingCall = false;
     private boolean mIsPhoneOffhook = false;
     private boolean mIsPhoneOutgoing = false;
     private boolean mProximitySpeaker = false;
@@ -149,7 +148,7 @@ public class ProximitySensor implements AccelerometerListener.OrientationListene
         // can also put the in-call screen in the INCALL state.
         boolean hasOngoingCall = InCallState.INCALL == newState && callList.hasLiveCall();
         boolean isOffhook = (InCallState.OUTGOING == newState) || hasOngoingCall;
-        mHasIncomingCall = (InCallState.INCOMING == newState);
+
         mIsPhoneOutgoing = (InCallState.OUTGOING == newState);
 
         if (isOffhook != mIsPhoneOffhook) {
@@ -161,13 +160,8 @@ public class ProximitySensor implements AccelerometerListener.OrientationListene
             updateProxSpeaker();
             updateProximitySensorMode();
         }
-
         if (hasOngoingCall && InCallState.OUTGOING == oldState) {
             setProxSpeaker(mIsProxSensorFar);
-        }
-
-        if (mHasIncomingCall) {
-            updateProximitySensorMode();
         }
     }
 
@@ -329,15 +323,15 @@ public class ProximitySensor implements AccelerometerListener.OrientationListene
                     .add("aud", CallAudioState.audioRouteToString(audioMode))
                     .toString());
 
-            if ((mIsPhoneOffhook || mHasIncomingCall) && !screenOnImmediately) {
+            if (mIsPhoneOffhook && !screenOnImmediately) {
                 Log.d(this, "Turning on proximity sensor");
                 // Phone is in use!  Arrange for the screen to turn off
                 // automatically when the sensor detects a close object.
                 turnOnProximitySensor();
             } else {
                 Log.d(this, "Turning off proximity sensor");
-                // Phone is idle.  We don't want any special proximity sensor
-                // behavior in this case.
+                // Phone is either idle, or ringing.  We don't want any special proximity sensor
+                // behavior in either case.
                 turnOffProximitySensor(screenOnImmediately);
             }
     }
